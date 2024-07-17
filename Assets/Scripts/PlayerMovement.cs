@@ -58,7 +58,12 @@ public class PlayerMovement : MonoBehaviour
     void OnFire(InputValue value){
         if(!isAlive) return;
         if(value.isPressed){
-            Instantiate(axe, weapon.position, transform.rotation);
+            GameObject bullet = AxePool.SharedInstance.GetPooledObject();
+            if(bullet != null){
+                bullet.transform.position = weapon.transform.position;
+                bullet.transform.rotation = transform.rotation;
+                bullet.SetActive(true);
+            }
         }
     }
 

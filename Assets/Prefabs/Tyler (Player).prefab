@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 251744194485560094}
+  - component: {fileID: 3300164009192414659}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -31,6 +32,21 @@ Transform:
   m_Father: {fileID: 8457988901529838307}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3300164009192414659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5715116838231329703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127ec786a9cc3bc4f9d067de652014df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObjects: []
+  objectToPool: {fileID: 9210993647539021689, guid: f934a6bdb135552438404a6ec894c656, type: 3}
+  amountToPool: 10
 --- !u!1 &8457988901529838310
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +143,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1159568743
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 10
   m_Sprite: {fileID: 1446682037, guid: 13264177c4b3c8e419b10e1e20fc5069, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

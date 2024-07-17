@@ -9,7 +9,6 @@ public class Axe : MonoBehaviour
     Rigidbody2D rigbody;
     PlayerMovement player;
     float xSpeed;
-
     void Start()
     {
         rigbody = GetComponent<Rigidbody2D>();
@@ -27,11 +26,11 @@ public class Axe : MonoBehaviour
         if(other.CompareTag("Enemy")){
             Destroy(other.gameObject);
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.CompareTag("Coin")) return;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
