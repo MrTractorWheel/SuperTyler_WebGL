@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
             if(bullet != null){
                 bullet.transform.position = weapon.transform.position;
                 bullet.transform.rotation = transform.rotation;
+                bullet.GetComponent<Axe>().setXSpeed(transform.localScale.x);
                 bullet.SetActive(true);
             }
         }

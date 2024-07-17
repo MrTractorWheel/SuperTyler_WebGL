@@ -13,7 +13,6 @@ public class Axe : MonoBehaviour
     {
         rigbody = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<PlayerMovement>();
-        xSpeed = player.transform.localScale.x * axeSpeed;
     }
 
     void Update()
@@ -22,6 +21,10 @@ public class Axe : MonoBehaviour
         transform.localScale = new Vector2(Mathf.Sign(rigbody.velocity.x), 1f);
     }
 
+    public void setXSpeed(float speed){
+        xSpeed = speed * axeSpeed;
+    }
+    
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")){
             Destroy(other.gameObject);
