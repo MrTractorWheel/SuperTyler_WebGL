@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3310559269601060268
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5747864687625262339, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_Name
+      value: Red Kurby (Enemy) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.9848197
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.122665405
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.038331978
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262460, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262463, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.034868028
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262463, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.034868028
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747864687625262463, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.2578616
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b86c2cf9c1f2bf409a84a96713aca3b, type: 3}
