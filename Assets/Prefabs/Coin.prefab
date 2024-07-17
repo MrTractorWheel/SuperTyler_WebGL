@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPickupSFX: {fileID: 8300000, guid: 19b6517efce8ed649a8356e38f47e544, type: 3}
+  pointsForPickup: 100
 --- !u!82 &7704567778863546234
 AudioSource:
   m_ObjectHideFlags: 0

@@ -67,6 +67,9 @@ TagManager:
   - name: Enemies
     uniqueID: 2379880629
     locked: 0
+  - name: axe
+    uniqueID: 25069147
+    locked: 0
   - name: player
     uniqueID: 1159568743
     locked: 0
