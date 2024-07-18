@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D playerFeetBox;
     float gravityScaleAtStart;
     bool isAlive = true;
+    private PauseFSM pauseFSM;
+    private bool isControlsActive = true;
 
     void Start()
     {
@@ -31,24 +33,27 @@ public class PlayerMovement : MonoBehaviour
         playerFeetBox = GetComponent<BoxCollider2D>();
         blood = GetComponent<ParticleSystem>();
         gravityScaleAtStart = rigbody.gravityScale;
+        pauseFSM = FindObjectOfType<PauseFSM>(); 
     }
 
     void Update()
     {
         if(!isAlive) return;
-        Run();
-        FlipSprite();
-        ClimbLeader();
-        Die();
+        if(pauseFSM != null && pauseFSM.CurrentState == PauseFSM.GameState.Play){
+            Run();
+            FlipSprite();
+            ClimbLeader();
+            Die();
+        }
     }
 
     void OnMove(InputValue value){
-        if(!isAlive) return;
+        if(!isAlive || !isControlsActive) return;
         moveInput = value.Get<Vector2>();
     }
 
     void OnJump(InputValue value){
-        if(!isAlive) return;
+        if(!isAlive || !isControlsActive) return;
         if(!playerFeetBox.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
         if(value.isPressed){
             rigbody.velocity += new Vector2(0f, jumpSpeed);
@@ -56,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnFire(InputValue value){
-        if(!isAlive) return;
+        if(!isAlive || !isControlsActive) return;
         if(value.isPressed){
             GameObject bullet = AxePool.SharedInstance.GetPooledObject();
             if(bullet != null){
@@ -107,5 +112,9 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator Kill(){
         yield return new WaitForSeconds(0.5f);
         FindObjectOfType<GameSession>().ProcessPlayerDeath();
+    }
+
+    public void ToggleControls(bool isActive){
+        isControlsActive = isActive;
     }
 }
