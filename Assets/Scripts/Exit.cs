@@ -16,8 +16,12 @@ public class Exit : MonoBehaviour
         yield return new WaitForSecondsRealtime(levelLoadDelay);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex+1;
-        if(nextSceneIndex == SceneManager.sceneCountInBuildSettings) nextSceneIndex = 0;
-        FindObjectOfType<ScenePersist>().ResetScenePersist();
-        SceneManager.LoadScene(nextSceneIndex);
+        if(nextSceneIndex == SceneManager.sceneCountInBuildSettings) {
+        FindObjectOfType<GameSession>().ResetGame();
+        }
+        else{
+            FindObjectOfType<ScenePersist>().ResetScenePersist();
+            SceneManager.LoadScene(nextSceneIndex);
+        }
     }
 }

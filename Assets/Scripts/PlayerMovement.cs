@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     bool isAlive = true;
     private PauseFSM pauseFSM;
     private bool isControlsActive = true;
+    public DeathEffect deathEffect;
 
     void Start()
     {
@@ -104,7 +105,9 @@ public class PlayerMovement : MonoBehaviour
         if(rigbody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazards"))){
             isAlive = false;
             animator.SetTrigger("DieMF");
-            blood.Play();
+            deathEffect.PlayDeathEffect();
+            rigbody.velocity = Vector2.zero;
+            rigbody.constraints = RigidbodyConstraints2D.FreezeAll;
             StartCoroutine(Kill());
         }
     }
