@@ -36,6 +36,10 @@ public class GameSession : MonoBehaviour
         }
     }
 
+    public void ResetGame(){
+        ResetGameSession();
+    }
+
     public void ToScore(int points){
         score += points;
         scoreTxt.text = score.ToString();
