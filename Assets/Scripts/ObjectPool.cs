@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AxePool : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
-    public static AxePool SharedInstance;
+    public static ObjectPool SharedInstance;
     public List<GameObject> pooledObjects;
     public GameObject objectToPool;
     public int amountToPool;
