@@ -9,6 +9,7 @@ public class Axe : MonoBehaviour
     Rigidbody2D rigbody;
     PlayerMovement player;
     float xSpeed;
+    public DeathEffect deathEffect;
     void Start()
     {
         rigbody = GetComponent<Rigidbody2D>();
@@ -27,6 +28,7 @@ public class Axe : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")){
+            deathEffect.PlayDeathEffect(other.gameObject);
             Destroy(other.gameObject);
         }
         gameObject.SetActive(false);

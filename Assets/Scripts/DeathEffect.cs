@@ -6,10 +6,10 @@ public class DeathEffect : MonoBehaviour
 {
     public GameObject deathEffectPrefab; 
     [SerializeField] AudioClip deathSFX;
-    public void PlayDeathEffect()
+    public void PlayDeathEffect(GameObject gameObject)
     {
-        Instantiate(deathEffectPrefab, FindObjectOfType<PlayerMovement>().gameObject.transform.position, Quaternion.identity);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position);
+        Instantiate(deathEffectPrefab, gameObject.transform.position, Quaternion.identity);
         FindObjectOfType<ParticleSystem>().Play();
     }
 }

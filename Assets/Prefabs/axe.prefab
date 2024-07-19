@@ -147,3 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axeSpeed: 20
+  deathEffect: {fileID: 7977615143944374748, guid: bf860ebcb97f65f418b18b27e7fe13be, type: 3}
