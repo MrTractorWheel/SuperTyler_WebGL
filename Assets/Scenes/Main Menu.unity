@@ -308,7 +308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Super Tyler: \n\t\t2D World"
+  m_text: "Super Tyler: \n\t\t2D Worlds"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa0d39f4cdc16ae4780e1780bb08974c, type: 2}
   m_sharedMaterial: {fileID: 8286480818411782381, guid: fa0d39f4cdc16ae4780e1780bb08974c, type: 2}
