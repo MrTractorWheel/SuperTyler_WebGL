@@ -13,10 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float climbSpeed = 10f;
     [SerializeField] GameObject axe;
+    [SerializeField] GameObject machette;
     [SerializeField] Transform weapon;
-
-    ParticleSystem blood;
-    
     Vector2 moveInput;
     Rigidbody2D rigbody;
     Animator animator;
@@ -26,13 +24,13 @@ public class PlayerMovement : MonoBehaviour
     private PauseFSM pauseFSM;
     private bool isControlsActive = true;
     public DeathEffect deathEffect;
+    private bool isAxe = true;
 
     void Start()
     {
         rigbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerFeetBox = GetComponent<BoxCollider2D>();
-        blood = GetComponent<ParticleSystem>();
         gravityScaleAtStart = rigbody.gravityScale;
         pauseFSM = FindObjectOfType<PauseFSM>(); 
     }
@@ -42,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         if(!isAlive) return;
         if(pauseFSM != null && pauseFSM.CurrentState == PauseFSM.GameState.Play){
             Run();
+            ChangeWeapon();
             FlipSprite();
             ClimbLeader();
             Die();
@@ -64,11 +63,14 @@ public class PlayerMovement : MonoBehaviour
     void OnFire(InputValue value){
         if(!isAlive || !isControlsActive) return;
         if(value.isPressed){
-            GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+            GameObject bullet;
+            if(isAxe) bullet = ObjectPool.SharedInstance.GetPooledObject(0);
+            else bullet = ObjectPool.SharedInstance.GetPooledObject(1);
             if(bullet != null){
                 bullet.transform.position = weapon.transform.position;
-                bullet.transform.rotation = transform.rotation;
-                bullet.GetComponent<Axe>().setXSpeed(transform.localScale.x);
+                bullet.transform.rotation = transform.rotation * Quaternion.Euler(0,0,isAxe ? 0 : -45*transform.localScale.x);
+                if(isAxe) bullet.GetComponent<Axe>().setXSpeed(transform.localScale.x);
+                else bullet.GetComponent<Machette>().setXSpeed(transform.localScale.x);
                 bullet.SetActive(true);
             }
         }
@@ -119,5 +121,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void ToggleControls(bool isActive){
         isControlsActive = isActive;
+    }
+
+    void ChangeWeapon(){
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0) isAxe = !isAxe; 
     }
 }

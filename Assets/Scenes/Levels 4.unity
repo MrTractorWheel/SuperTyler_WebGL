@@ -78658,8 +78658,10 @@ MonoBehaviour:
   jumpSpeed: 20
   climbSpeed: 5
   axe: {fileID: 1923197914}
+  machette: {fileID: 1563857724}
   weapon: {fileID: 1373162679}
   deathEffect: {fileID: 1824884644}
+  isAxe: 1
 --- !u!61 &1413642965
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -79013,6 +79015,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553558999}
   m_CullTransparentMesh: 1
+--- !u!1001 &1563857723
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1941396795435964505, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_Name
+      value: machette
+      objectReference: {fileID: 0}
+    - target: {fileID: 5422958158951804444, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.962403
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.539622
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694865788328713947, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668493126601573595, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 2047954857}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+--- !u!1 &1563857724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1941396795435964505, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
+  m_PrefabInstance: {fileID: 1563857723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1637892248
 GameObject:
   m_ObjectHideFlags: 0
@@ -91404,6 +91476,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3300164009192414659, guid: 3c1064b95995b554b8f65412cdbe921c, type: 3}
+      propertyPath: objectsToPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 1941396795435964505, guid: 77613f54e119b7147b1f2ff821528ebb, type: 3}
     - target: {fileID: 4449730180517941187, guid: 3c1064b95995b554b8f65412cdbe921c, type: 3}
       propertyPath: m_Size.x
       value: 0.6058688

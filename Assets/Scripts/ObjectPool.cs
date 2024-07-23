@@ -6,7 +6,7 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool SharedInstance;
     public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
+    public List<GameObject> objectsToPool;
     public int amountToPool;
 
     private void Awake() {
@@ -17,14 +17,25 @@ public class ObjectPool : MonoBehaviour
         pooledObjects = new List<GameObject>();
         GameObject tmp;
         for(int i = 0; i<amountToPool; i++) {
-            tmp = Instantiate(objectToPool);
+            tmp = Instantiate(objectsToPool[0]);
+            tmp.SetActive(false);
+            pooledObjects.Add(tmp);
+        }
+        for(int i = 0; i<amountToPool; i++) {
+            tmp = Instantiate(objectsToPool[1]);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }
     }
 
-    public GameObject GetPooledObject(){
-        for(int i=0; i<amountToPool; i++){
+    public GameObject GetPooledObject(int elementNum){
+        int num=0;
+        int AmountToPool = amountToPool;
+        if(elementNum == 1) {
+            num += amountToPool;
+            AmountToPool += amountToPool;
+        }
+        for(int i=num; i<AmountToPool; i++){
             if(!pooledObjects[i].activeInHierarchy){
                 return pooledObjects[i];
             }
