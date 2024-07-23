@@ -29,6 +29,15 @@ public class PlayerMovement : MonoBehaviour
     public DeathEffect deathEffect;
     private bool isAxe = true;
 
+    void SaveIsAxe(){
+        PlayerPrefs.SetInt("isAxe", isAxe ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    void OnDestroy(){
+        SaveIsAxe();
+    }
+
     void Start()
     {
         rigbody = GetComponent<Rigidbody2D>();
@@ -36,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
         playerFeetBox = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = rigbody.gravityScale;
         pauseFSM = FindObjectOfType<PauseFSM>(); 
+        if (PlayerPrefs.HasKey("isAxe")){
+            isAxe = PlayerPrefs.GetInt("isAxe") == 1;
+        }
     }
 
     void Update()
