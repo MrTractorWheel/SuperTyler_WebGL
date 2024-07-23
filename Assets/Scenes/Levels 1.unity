@@ -2247,7 +2247,6 @@ MonoBehaviour:
   machette: {fileID: 1923197914}
   weapon: {fileID: 1373162679}
   deathEffect: {fileID: 1100673123}
-  isAxe: 1
 --- !u!61 &1413642965
 BoxCollider2D:
   m_ObjectHideFlags: 0

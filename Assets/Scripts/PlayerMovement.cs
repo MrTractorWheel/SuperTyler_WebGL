@@ -64,8 +64,14 @@ public class PlayerMovement : MonoBehaviour
         if(!isAlive || !isControlsActive) return;
         if(value.isPressed){
             GameObject bullet;
-            if(isAxe) bullet = ObjectPool.SharedInstance.GetPooledObject(0);
-            else bullet = ObjectPool.SharedInstance.GetPooledObject(1);
+            if(isAxe) {
+                bullet = ObjectPool.SharedInstance.GetPooledObject(0);
+                FindObjectOfType<GameSession>().throwAxe();
+            }
+            else{ 
+                bullet = ObjectPool.SharedInstance.GetPooledObject(1);
+                FindObjectOfType<GameSession>().throwMachette();
+            }
             if(bullet != null){
                 bullet.transform.position = weapon.transform.position;
                 bullet.transform.rotation = transform.rotation * Quaternion.Euler(0,0,isAxe ? 0 : -45*transform.localScale.x);
@@ -126,5 +132,6 @@ public class PlayerMovement : MonoBehaviour
     void ChangeWeapon(){
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0) isAxe = !isAxe; 
+        FindObjectOfType<GameSession>().ChangeColor(isAxe);
     }
 }
