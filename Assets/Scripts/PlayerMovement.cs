@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+using TMPro;
 using UnityEngine.InputSystem;
 
 
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject axe;
     [SerializeField] GameObject machette;
     [SerializeField] Transform weapon;
+    [SerializeField] GameObject messagePrefab;
+    [SerializeField] float messageDuration = 0.5f;
     Vector2 moveInput;
     Rigidbody2D rigbody;
     Animator animator;
@@ -64,13 +67,22 @@ public class PlayerMovement : MonoBehaviour
         if(!isAlive || !isControlsActive) return;
         if(value.isPressed){
             GameObject bullet;
-            if(isAxe) {
+            if(isAxe && FindObjectOfType<GameSession>().axeCount > 0) {
                 bullet = ObjectPool.SharedInstance.GetPooledObject(0);
                 FindObjectOfType<GameSession>().throwAxe();
             }
-            else{ 
+            else if (!isAxe && FindObjectOfType<GameSession>().machetteCount > 0){ 
                 bullet = ObjectPool.SharedInstance.GetPooledObject(1);
                 FindObjectOfType<GameSession>().throwMachette();
+            }
+            else{
+                GameObject messageInstance = Instantiate(messagePrefab, FindObjectOfType<Canvas>().transform);
+                TextMeshProUGUI textMeshPro = messageInstance.GetComponent<TextMeshProUGUI>();
+                textMeshPro.text = "No Object To Throw :(";
+                RectTransform rectTransform = messageInstance.GetComponent<RectTransform>();
+                rectTransform.anchoredPosition = new Vector2(0, 0);
+                Destroy(messageInstance, messageDuration);
+                return;
             }
             if(bullet != null){
                 bullet.transform.position = weapon.transform.position;
@@ -132,6 +144,11 @@ public class PlayerMovement : MonoBehaviour
     void ChangeWeapon(){
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0) isAxe = !isAxe; 
+        FindObjectOfType<GameSession>().ChangeColor(isAxe);
+    }
+
+    public void ChangeWeaponOnPickup(bool newIsAxe){
+        isAxe = newIsAxe;
         FindObjectOfType<GameSession>().ChangeColor(isAxe);
     }
 }

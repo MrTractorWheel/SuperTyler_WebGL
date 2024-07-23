@@ -21,7 +21,7 @@ TagManager:
   - Hazards
   - Axe
   - Exit
-  - 
+  - weapon pickup
   - 
   - 
   - 
@@ -63,6 +63,9 @@ TagManager:
     locked: 0
   - name: Exit
     uniqueID: 939847811
+    locked: 0
+  - name: weapon pickup
+    uniqueID: 2275548221
     locked: 0
   - name: Enemies
     uniqueID: 2379880629

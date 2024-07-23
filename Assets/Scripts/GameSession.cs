@@ -10,8 +10,8 @@ public class GameSession : MonoBehaviour
 {
     [SerializeField] int playerLives = 3;
     [SerializeField] int score = 0;
-    [SerializeField] int axeCount;
-    [SerializeField] int machetteCount;
+    public int axeCount;
+    public int machetteCount;
     [SerializeField] TextMeshProUGUI livesTxt;
     [SerializeField] TextMeshProUGUI scoreTxt;
     [SerializeField] TextMeshProUGUI axeCountTxt;
