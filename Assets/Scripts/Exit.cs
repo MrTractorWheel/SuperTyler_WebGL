@@ -17,7 +17,7 @@ public class Exit : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex+1;
         if(nextSceneIndex == SceneManager.sceneCountInBuildSettings) {
-        FindObjectOfType<GameSession>().ResetGame();
+            FindObjectOfType<GameSession>().ResetGame();
         }
         else{
             FindObjectOfType<ScenePersist>().ResetScenePersist();
