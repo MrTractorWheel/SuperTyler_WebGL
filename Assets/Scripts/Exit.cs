@@ -8,8 +8,10 @@ public class Exit : MonoBehaviour
     [SerializeField] float levelLoadDelay;
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")){
+            UnlockNewLevel();
             StartCoroutine(LoadNextLevel());
+        }
     }
 
     IEnumerator LoadNextLevel(){
@@ -22,6 +24,14 @@ public class Exit : MonoBehaviour
         else{
             FindObjectOfType<ScenePersist>().ResetScenePersist();
             SceneManager.LoadScene(nextSceneIndex);
+        }
+    }
+
+    void UnlockNewLevel(){
+        if(SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex")){
+            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel",1) + 1);
+            PlayerPrefs.Save();
         }
     }
 }

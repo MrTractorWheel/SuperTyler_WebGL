@@ -844,7 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2ce235f4f88a341920d87de9b474e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLives: 2
+  playerLives: 3
   score: 0
   axeCount: 0
   machetteCount: 0
