@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
-    [SerializeField] int playerLives = 2;
+    [SerializeField] int playerLives = 3;
     [SerializeField] int score = 0;
     public int axeCount;
     public int machetteCount;
@@ -20,6 +20,37 @@ public class GameSession : MonoBehaviour
     [SerializeField] Image machetteImage;
     [SerializeField] Color originalColor;
     [SerializeField] Color highlightedColor;
+    private int starsEarned = 0;
+    private bool allLivesRemaining = false;
+    [SerializeField] int starLimit1;
+    [SerializeField] int starLimit2;
+    [SerializeField] int starLimit3;
+
+    public void CalculateStars()
+    {
+        if (score >= starLimit3) 
+            starsEarned = 3;
+        else if (score >= starLimit2)
+            starsEarned = 2;
+        else if (score >= starLimit1)
+            starsEarned = 1;
+        else
+            starsEarned = 0;
+
+        allLivesRemaining = playerLives == 3;
+    }
+
+    public void SaveStarProgress(int levelIndex)
+    {
+        int previousStars = PlayerPrefs.GetInt("Level" + levelIndex + "Stars", 0);
+        if (starsEarned > previousStars || (starsEarned == previousStars && allLivesRemaining))
+        {
+            PlayerPrefs.SetInt("Level" + levelIndex + "Stars", starsEarned);
+            PlayerPrefs.SetInt("Level" + levelIndex + "AllLives", allLivesRemaining ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
+
     void Awake()
     {
         int GameSessionCount = FindObjectsOfType<GameSession>().Length;

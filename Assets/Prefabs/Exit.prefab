@@ -125,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoadDelay: 0
+  completedColor: {r: 1, g: 0.57254905, b: 0, a: 0}
