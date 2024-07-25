@@ -3,7 +3,11 @@ guid: 5406c826fdf2fee4983e98c6fed890f9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - levels: {instanceID: 0}
+  - filledStarSprite: {fileID: 21300000, guid: 0612c30402f568146804eac0c148276c, type: 3}
+  - emptyStarSprite: {instanceID: 0}
+  - redStarSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

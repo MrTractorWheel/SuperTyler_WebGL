@@ -28,12 +28,12 @@ public class Exit : MonoBehaviour
     }
 
     void UnlockNewLevel(){
+        var gameSession = FindObjectOfType<GameSession>();
+        gameSession.CalculateStars();
+        gameSession.SaveStarProgress(SceneManager.GetActiveScene().buildIndex);
         if(SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex")){
             PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
             PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel",1) + 1);
         }
-        var gameSession = FindObjectOfType<GameSession>();
-        gameSession.CalculateStars();
-        gameSession.SaveStarProgress(SceneManager.GetActiveScene().buildIndex);
     }
 }
