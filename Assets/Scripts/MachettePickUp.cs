@@ -15,8 +15,7 @@ public class MachettePickUp : MonoBehaviour
             FindObjectOfType<GameSession>().TakeMachette(numToPick);
             GameObject messageInstance = Instantiate(messagePrefab, FindObjectOfType<Canvas>().transform);
             TextMeshProUGUI textMeshPro = messageInstance.GetComponent<TextMeshProUGUI>();
-            AudioSource sfx = messageInstance.GetComponent<AudioSource>();
-            sfx.Play();
+            FindObjectOfType<VolumeSettings>().playWeaponPickUpSFX();
             textMeshPro.text = "5 Machettes Picked-Up";
             RectTransform rectTransform = messageInstance.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector2(0, 0);

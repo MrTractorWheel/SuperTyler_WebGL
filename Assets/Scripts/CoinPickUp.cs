@@ -9,7 +9,7 @@ public class CoinPickUp : MonoBehaviour
     bool wasCollected = false;
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Player") && !wasCollected){
-            AudioSource.PlayClipAtPoint(coinPickupSFX, Camera.main.transform.position);
+           FindObjectOfType<VolumeSettings>().playCoinPickUpSFX();
             wasCollected = true;
             FindObjectOfType<GameSession>().ToScore(pointsForPickup);
             Destroy(gameObject);

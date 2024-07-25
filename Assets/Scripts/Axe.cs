@@ -29,6 +29,7 @@ public class Axe : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")){
             deathEffect.PlayDeathEffect(other.gameObject);
+            FindObjectOfType<VolumeSettings>().playEnemyDeathSFX();
             Destroy(other.gameObject);
         }
         gameObject.SetActive(false);

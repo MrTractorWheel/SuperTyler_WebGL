@@ -55,12 +55,11 @@ public class MainMenu : MonoBehaviour
     private void Awake(){
         ButtonsToArray();
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-        for (int i = 0; i < buttons.Length; i++)
-        {
+        if (unlockedLevel >= 5) return;
+        for (int i = 0; i < buttons.Length; i++){
             buttons[i].interactable = false;
         }
-        for (int i = 0; i < unlockedLevel; i++)
-        {
+        for (int i = 0; i < unlockedLevel; i++){
             buttons[i].interactable = true;
         }
     }

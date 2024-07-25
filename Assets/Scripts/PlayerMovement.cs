@@ -137,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if(rigbody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazards"))){
             isAlive = false;
             animator.SetTrigger("DieMF");
+            FindObjectOfType<VolumeSettings>().playDeathSFX();
             deathEffect.PlayDeathEffect(gameObject);
             rigbody.velocity = Vector2.zero;
             rigbody.constraints = RigidbodyConstraints2D.FreezeAll;
