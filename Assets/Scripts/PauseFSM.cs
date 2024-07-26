@@ -14,6 +14,8 @@ public class PauseFSM : MonoBehaviour
     private GameState currentState;
     private PlayerMovement playerController;
 
+    private bool isSettingsOpen = false;
+
     void Start()
     {
         currentState = GameState.Play;
@@ -29,8 +31,10 @@ public class PauseFSM : MonoBehaviour
         {
             if (currentState == GameState.Play)
                 PauseGame();
-            else
+            else if (currentState == GameState.Pause && !isSettingsOpen)
                 ResumeGame();
+            else 
+                return;
         }
     }
 
@@ -57,5 +61,9 @@ public class PauseFSM : MonoBehaviour
     public GameState CurrentState
     {
         get { return currentState; }
+    }
+
+    public void setSettingsOpen(bool isOpen){
+        isSettingsOpen = isOpen;
     }
 }
