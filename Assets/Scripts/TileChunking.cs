@@ -1,87 +1,110 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 public class TileChunking : MonoBehaviour
 {
-    public Tilemap mainTilemap; 
-    public Vector2Int chunkSize = new Vector2Int(10, 10); 
-    private Tilemap[,] chunks; 
+    public Tilemap mainTilemap;
+    public Vector2Int chunkSize = new Vector2Int(10, 10);
+    private List<Vector2Int> chunkCenters;
+    private Vector3 lastCameraPosition;
+    private float updateThreshold = 5.0f; 
+    private Vector2Int previousChunkIndex;
+    [SerializeField] Color customColor = Color.white;
 
     void Start()
     {
         BoundsInt bounds = mainTilemap.cellBounds;
         int rows = Mathf.CeilToInt((float)bounds.size.y / chunkSize.y);
         int cols = Mathf.CeilToInt((float)bounds.size.x / chunkSize.x);
-        chunks = new Tilemap[rows, cols];
-        for (int row = 0; row < rows; row++){
-            for (int col = 0; col < cols; col++){
-                // Create a new GameObject for the chunk
-                GameObject chunkGO = new GameObject($"Chunk_{row}_{col}");
-                chunkGO.transform.SetParent(transform);
-
-                // Add Tilemap and TilemapRenderer components
-                Tilemap chunkTilemap = chunkGO.AddComponent<Tilemap>();
-                chunkGO.AddComponent<TilemapRenderer>();
-
-                // Set the chunk's position in world space
-                Vector3Int chunkOrigin = new Vector3Int(
-                    bounds.x + col * chunkSize.x,
-                    bounds.y + row * chunkSize.y,
-                    0
+        chunkCenters = new List<Vector2Int>();
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                Vector2Int chunkCenter = new Vector2Int(
+                    bounds.xMin + col * chunkSize.x + chunkSize.x / 2,
+                    bounds.yMin + row * chunkSize.y + chunkSize.y / 2
                 );
-                chunkGO.transform.position = mainTilemap.CellToWorld(chunkOrigin);
+                chunkCenters.Add(chunkCenter);
+            }
+        }
+        lastCameraPosition = Camera.main.transform.position;
+        previousChunkIndex = GetChunkIndex(lastCameraPosition);
+        UpdateChunksVisibility(previousChunkIndex, Vector2Int.zero);
+    }
 
-                // Copy tiles from the main Tilemap to the chunk Tilemap
+    void Update()
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null) return;
+        Vector3 cameraPos = mainCamera.transform.position;
+        if (Vector3.Distance(cameraPos, lastCameraPosition) > updateThreshold)
+        {
+            Vector2Int currentChunkIndex = GetChunkIndex(cameraPos);
+            Vector2Int movementDirection = currentChunkIndex - previousChunkIndex;
+            UpdateChunksVisibility(currentChunkIndex, movementDirection);
+            lastCameraPosition = cameraPos;
+            previousChunkIndex = currentChunkIndex;
+        }
+    }
+
+    Vector2Int GetChunkIndex(Vector3 position)
+    {
+        Vector3 localPos = mainTilemap.WorldToCell(position);
+        int col = Mathf.FloorToInt((localPos.x - mainTilemap.cellBounds.xMin) / (float)chunkSize.x);
+        int row = Mathf.FloorToInt((localPos.y - mainTilemap.cellBounds.yMin) / (float)chunkSize.y);
+        return new Vector2Int(col, row);
+    }
+
+    void UpdateChunksVisibility(Vector2Int currentChunkIndex, Vector2Int movementDirection)
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null) return;
+        Vector3 cameraPos = mainCamera.transform.position;
+        float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect * 2;
+        float cameraHalfHeight = mainCamera.orthographicSize * 2;
+        float buffer = 5f; 
+        Rect cameraRect = new Rect(
+            cameraPos.x - cameraHalfWidth - buffer,
+            cameraPos.y - cameraHalfHeight - buffer,
+            (cameraHalfWidth + buffer) * 2,
+            (cameraHalfHeight + buffer) * 2
+        );
+        for (int i = 0; i < chunkCenters.Count; i++)
+        {
+            Vector2Int chunkCenter = chunkCenters[i];
+            Vector3 chunkWorldPos = mainTilemap.CellToWorld((Vector3Int)chunkCenter);
+            Rect chunkRect = new Rect(
+                chunkWorldPos.x - chunkSize.x * mainTilemap.cellSize.x / 2,
+                chunkWorldPos.y - chunkSize.y * mainTilemap.cellSize.y / 2,
+                chunkSize.x * mainTilemap.cellSize.x,
+                chunkSize.y * mainTilemap.cellSize.y
+            );
+            if (movementDirection == Vector2Int.zero || IsChunkAffected(currentChunkIndex, chunkCenter, movementDirection))
+            {
+                bool inView = cameraRect.Overlaps(chunkRect);
                 for (int x = 0; x < chunkSize.x; x++)
                 {
                     for (int y = 0; y < chunkSize.y; y++)
                     {
-                        // Tile position in main Tilemap
-                        Vector3Int tilePos = new Vector3Int(chunkOrigin.x + x, chunkOrigin.y + y, 0);
-
-                        // Check if tile exists at this position
-                        TileBase tile = mainTilemap.GetTile(tilePos);
-                        if (tile != null)
-                        {
-                            // Set tile in the chunk Tilemap
-                            Vector3Int localTilePos = new Vector3Int(x, y, 0);
-                            chunkTilemap.SetTile(localTilePos, tile);
-                        }
+                        Vector3Int tilePos = new Vector3Int(
+                            chunkCenter.x - chunkSize.x / 2 + x,
+                            chunkCenter.y - chunkSize.y / 2 + y,
+                            0
+                        );
+                        mainTilemap.SetTileFlags(tilePos, TileFlags.None);
+                        mainTilemap.SetColor(tilePos, inView ? customColor : Color.clear);
                     }
                 }
-                chunks[row, col] = chunkTilemap;
             }
         }
-        mainTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }
 
-    void Update(){
-        UpdateChunksVisibility();
-    }
-
-    void UpdateChunksVisibility(){
-        Camera mainCamera = Camera.main;
-        Vector3 cameraPos = mainCamera.transform.position;
-        float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
-        float cameraHalfHeight = mainCamera.orthographicSize;
-        Rect cameraRect = new Rect(
-            cameraPos.x - cameraHalfWidth,
-            cameraPos.y - cameraHalfHeight,
-            cameraHalfWidth * 2,
-            cameraHalfHeight * 2
-        );
-        foreach (var chunk in chunks){
-            if (chunk != null){
-                Vector2 chunkWorldPos = chunk.transform.position;
-                Rect chunkRect = new Rect(
-                    chunkWorldPos.x,
-                    chunkWorldPos.y,
-                    chunkSize.x * mainTilemap.cellSize.x,
-                    chunkSize.y * mainTilemap.cellSize.y
-                );
-                bool inView = cameraRect.Overlaps(chunkRect);
-                chunk.gameObject.SetActive(inView);
-            }
-        }
+    bool IsChunkAffected(Vector2Int currentChunkIndex, Vector2Int chunkCenter, Vector2Int movementDirection)
+    {
+        Vector2Int chunkIndex = GetChunkIndex(mainTilemap.CellToWorld((Vector3Int)chunkCenter));
+        return chunkIndex == currentChunkIndex || chunkIndex == currentChunkIndex + movementDirection;
     }
 }
+
