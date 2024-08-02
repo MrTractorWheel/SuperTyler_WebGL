@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6548689988377564274}
   m_Layer: 13
   m_Name: Exit
-  m_TagString: Coin
+  m_TagString: Exit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,4 +125,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoadDelay: 0
-  completedColor: {r: 1, g: 0.57254905, b: 0, a: 0}
