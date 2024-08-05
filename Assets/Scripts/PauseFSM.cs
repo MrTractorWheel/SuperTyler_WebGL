@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class PauseFSM : MonoBehaviour
 {
@@ -29,33 +30,43 @@ public class PauseFSM : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentState == GameState.Play)
-                PauseGame();
-            else if (currentState == GameState.Pause && !isSettingsOpen)
-                ResumeGame();
+            if (currentState == GameState.Play || (currentState == GameState.Pause && !isSettingsOpen))
+                TogglePause().Forget();
             else 
                 return;
         }
     }
-
-    void PauseGame()
+    
+    private async UniTaskVoid TogglePause()
     {
-        currentState = GameState.Pause;
-        Time.timeScale = 0f; 
-        if (pauseMenuUI != null)
-            pauseMenuUI.SetActive(true);
-        if (playerController != null)
-            playerController.ToggleControls(false);
+        if(currentState == GameState.Play) currentState = GameState.Pause;
+        else if(currentState == GameState.Pause) currentState = GameState.Play;
+        bool isPaused = currentState == GameState.Pause;
+        Time.timeScale = isPaused ? 0 : 1;
+        if (isPaused)
+        {
+            if (playerController != null)
+                playerController.ToggleControls(false);
+            await ShowPauseMenu();
+        }
+        else
+        {
+            if (playerController != null)
+                playerController.ToggleControls(true);
+            await HidePauseMenu();
+        }
     }
 
-    void ResumeGame()
+    private async UniTask ShowPauseMenu()
     {
-        currentState = GameState.Play;
-        Time.timeScale = 1f; 
-        if (pauseMenuUI != null)
-            pauseMenuUI.SetActive(false);
-        if (playerController != null)
-            playerController.ToggleControls(true);
+        pauseMenuUI.SetActive(true);
+        await UniTask.Delay(0); 
+    }
+
+    private async UniTask HidePauseMenu()
+    {
+        pauseMenuUI.SetActive(false);
+        await UniTask.Delay(0); 
     }
 
     public GameState CurrentState

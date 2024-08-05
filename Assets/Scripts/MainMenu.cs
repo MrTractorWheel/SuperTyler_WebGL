@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
 
 public class MainMenu : MonoBehaviour
 {
@@ -69,8 +68,8 @@ public class MainMenu : MonoBehaviour
         DisplayStars();
     }
 
-    public async UniTask OpenLevel(int levelId){
-        await SceneManager.LoadSceneAsync(levelId);
+    public void OpenLevel(int levelId){
+        SceneManager.LoadSceneAsync(levelId);
     }
 
     public void QuitGame(){

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 public class TileChunking : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class TileChunking : MonoBehaviour
         }
         lastCameraPosition = Camera.main.transform.position;
         previousChunkIndex = GetChunkIndex(lastCameraPosition);
-        UpdateChunksVisibility(previousChunkIndex, Vector2Int.zero);
+        UpdateChunksVisibility(previousChunkIndex, Vector2Int.zero).Forget();
     }
 
     void Update()
@@ -43,7 +44,7 @@ public class TileChunking : MonoBehaviour
         {
             Vector2Int currentChunkIndex = GetChunkIndex(cameraPos);
             Vector2Int movementDirection = currentChunkIndex - previousChunkIndex;
-            UpdateChunksVisibility(currentChunkIndex, movementDirection);
+            UpdateChunksVisibility(currentChunkIndex, movementDirection).Forget();
             lastCameraPosition = cameraPos;
             previousChunkIndex = currentChunkIndex;
         }
@@ -57,7 +58,7 @@ public class TileChunking : MonoBehaviour
         return new Vector2Int(col, row);
     }
 
-    void UpdateChunksVisibility(Vector2Int currentChunkIndex, Vector2Int movementDirection)
+    private async UniTaskVoid UpdateChunksVisibility(Vector2Int currentChunkIndex, Vector2Int movementDirection)
     {
         Camera mainCamera = Camera.main;
         if (mainCamera == null) return;
@@ -98,6 +99,7 @@ public class TileChunking : MonoBehaviour
                     }
                 }
             }
+            await UniTask.Yield();
         }
     }
 
