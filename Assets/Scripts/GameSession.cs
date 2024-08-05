@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 public class GameSession : MonoBehaviour
 {
@@ -72,15 +73,15 @@ public class GameSession : MonoBehaviour
 
     public void ProcessPlayerDeath(){
         if(playerLives > 1){
-            TakeLife();
+            TakeLife().Forget();
         }
         else{
-            ResetGameSession();
+            ResetGameSession().Forget();
         }
     }
 
     public void ResetGame(){
-        ResetGameSession();
+        ResetGameSession().Forget();
     }
 
     public void ToScore(int points){
@@ -108,18 +109,18 @@ public class GameSession : MonoBehaviour
         machetteCountTxt.text = machetteCount.ToString();
     }
 
-    private void TakeLife()
+    private async UniTaskVoid TakeLife()
     {
         playerLives--;
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        await SceneManager.LoadSceneAsync(currentSceneIndex);
         livesTxt.text = playerLives.ToString();
     }
 
-    private void ResetGameSession()
+    private async UniTaskVoid ResetGameSession()
     {
         FindObjectOfType<ScenePersist>().ResetScenePersist();
-        SceneManager.LoadScene(0);
+        await SceneManager.LoadSceneAsync(0);
         Destroy(gameObject);
     }
 
