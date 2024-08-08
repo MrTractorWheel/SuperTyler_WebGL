@@ -65,7 +65,7 @@ public class TileChunking : MonoBehaviour
         Vector3 cameraPos = mainCamera.transform.position;
         float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect * 2;
         float cameraHalfHeight = mainCamera.orthographicSize * 2;
-        float buffer = 5f; 
+        float buffer = 8f; 
         Rect cameraRect = new Rect(
             cameraPos.x - cameraHalfWidth - buffer,
             cameraPos.y - cameraHalfHeight - buffer,
